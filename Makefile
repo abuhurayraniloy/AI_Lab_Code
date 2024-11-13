@@ -1,21 +1,15 @@
-# Set the compiler
-CXX = clang++
-# Set the compiler flags
-CXXFLAGS = -std=c++20 -Wall -Wextra -Wpedantic
-# Get the names of all the C++ files in the directory
-CPPSRC ?= $(wildcard *.cpp)
-EXECUTABLE = $(patsubst %.cpp,%,$(CPPSRC))
+# Compiler
+CXX = g++
 
-# Build rules
-all: $(EXECUTABLE)
+# Compiler flags
+CXXFLAGS = -std=c++17 -Wall -Wextra
 
+# Rule to compile any .cpp file
 %: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $
+	$(CXX) $(CXXFLAGS) $< -o $@
 
-run_%: %
-	./$
-
+# Clean rule
 clean:
-	rm -f $(EXECUTABLE)
+	rm -f $(wildcard *.o) $(wildcard $(basename $(wildcard *.cpp)))
 
-.PHONY: all clean
+.PHONY: clean
